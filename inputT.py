@@ -1,42 +1,56 @@
 #INPUT TANGGAL PERTAMA KALI
-
 from datetime import datetime, timedelta
+import csv
+import calendar
+import tkinter as tk
+from tkinter import messagebox
 
-def hitung_siklus_mens(rata_durasi_mens, tanggal_terakhir_mens):
-    tanggal_terakhir_mens = datetime.strptime(tanggal_terakhir_mens, '%Y-%m-%d')
+def hitung_siklus_mens():
+    rata_waktu_mens = int(input("Masukkan rata-rata durasi menstruasi (dalam hari): "))
+    tgl_terakhir_mens = input("Masukkan tanggal terakhir menstruasi (format: DD-MM-YYYY): ")
+    tgl_terakhir_mens = datetime.strptime(tgl_terakhir_mens, '%d-%m-%Y')
 
-    tanggal_awal_ovulasi = tanggal_terakhir_mens + timedelta(days=int(rata_durasi_mens) - 14)
-    tanggal_terakhir_ovulasi = tanggal_awal_ovulasi + timedelta(days=4)
+    tgl_awal_mens_berikutnya = tgl_terakhir_mens + timedelta(days=28)
+    tgl_akhir_mens_berikutnya = tgl_terakhir_mens + timedelta(days=28 + rata_waktu_mens)
 
-    tanggal_awal_siklus_berikutnya = tanggal_terakhir_mens + timedelta(days=int(rata_durasi_mens))
-    tanggal_akhir_siklus_berikutnya = tanggal_awal_siklus_berikutnya + timedelta(days=int(rata_durasi_mens))
+    tgl_awal_folikular_berikutnya = tgl_akhir_mens_berikutnya + timedelta(days=1)
+    if rata_waktu_mens > 5:
+        tgl_akhir_folikular_berikutnya = tgl_awal_folikular_berikutnya + timedelta(days=7)
+    else:
+        tgl_akhir_folikular_berikutnya = tgl_awal_folikular_berikutnya + timedelta(days=9)
 
-    tanggal_awal_folikular = tanggal_awal_siklus_berikutnya - timedelta(days=14)
-    durasi_folikular = 14
-    
-    tanggal_awal_mens = tanggal_awal_siklus_berikutnya
-    durasi_mens = int(rata_durasi_mens)
+    tgl_awal_ovulasi_berikutnya = tgl_akhir_folikular_berikutnya + timedelta(days=1)
+    tgl_akhir_ovulasi_berikutnya = tgl_akhir_folikular_berikutnya + timedelta(days=3)
 
-    tanggal_awal_luteal = tanggal_awal_siklus_berikutnya + timedelta(days=int(rata_durasi_mens) - 14)
-    durasi_luteal = 14
-    
-    return tanggal_awal_ovulasi.strftime('%Y-%m-%d'), tanggal_awal_folikular.strftime('%Y-%m-%d'), durasi_folikular, tanggal_awal_mens.strftime('%Y-%m-%d'), durasi_mens, tanggal_awal_luteal.strftime('%Y-%m-%d'), durasi_luteal
+    tgl_awal_luteal_berikutnya = tgl_akhir_ovulasi_berikutnya + timedelta(days=1)
+    if rata_waktu_mens > 5:
+        tgl_akhir_luteal_berikutnya = tgl_awal_luteal_berikutnya + timedelta(days=9)
+    else:
+        tgl_akhir_luteal_berikutnya = tgl_awal_luteal_berikutnya + timedelta(days=11)
 
-rata_durasi_mens = input("Masukkan rata-rata durasi menstruasi (dalam hari): ")
-tanggal_terakhir_mens = input("Masukkan tanggal terakhir menstruasi (format: YYYY-MM-DD): ")
+    return (
+        tgl_awal_mens_berikutnya,
+        tgl_akhir_mens_berikutnya,
+        tgl_awal_folikular_berikutnya,
+        tgl_akhir_folikular_berikutnya,
+        tgl_awal_ovulasi_berikutnya,
+        tgl_akhir_ovulasi_berikutnya,
+        tgl_awal_luteal_berikutnya,
+        tgl_akhir_luteal_berikutnya,
+    )
 
-tanggal_awal_ovulasi, tanggal_awal_folikular, durasi_folikular, tanggal_awal_mens, durasi_mens, tanggal_awal_luteal, durasi_luteal = hitung_siklus_mens(rata_durasi_mens, tanggal_terakhir_mens)
+hasil = hitung_siklus_mens()
 
-    # tgl_terakhir_mens = (input(f'Masukkan Tanggal Terakhir Mens Kamu: '))
-    # bln = (input(f'Masukkan Bulan Terakhir Mens Kamu: '))
-    # rata_durasi_mens = (input(f'Kamu Biasanya Mens Berapa Hari Sih? '))
+def simpan_ke_csv(hasil):
+    nama_file = 'siklus_mens.csv'
+    template_csv = '''
+            tgl awal mens                            tgl akhir mens                     tgl awal folik                      tgl akhir folik                       tgl awal ovul                    tgl akhir ovul                     tgl awal lut                        tgl akhir lut
+         {}                     {}                  {}                  {}                  {}              {}                {}              {}'''.format(hasil[0], hasil[1], hasil[2], hasil[3], hasil[4], hasil[5], hasil[6], hasil[7])
+    file_datamens = open(nama_file, 'a')
+    file_datamens.write(template_csv)
+    file_datamens.close()
+        
 
-    # tanggal = '''
-    #     {}       {}        {}'''.format(tgl_terakhir_mens, bln, rata_durasi_mens)
+    messagebox.showinfo("Sukses", "Hasil berhasil disimpan dalam file {}".format(nama_file))
 
-    # database = open('databasetanggal.csv', 'a')
-    # database.write(tanggal)
-    # database.close()
-
-
-    
+simpan_ke_csv(hasil)
