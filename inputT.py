@@ -1,9 +1,5 @@
 #INPUT TANGGAL PERTAMA KALI
 from datetime import datetime, timedelta
-import csv
-import calendar
-import tkinter as tk
-from tkinter import messagebox
 
 def hitung_siklus_mens():
     rata_waktu_mens = int(input("Masukkan rata-rata durasi menstruasi (dalam hari): "))
@@ -43,14 +39,19 @@ hasil = hitung_siklus_mens()
 
 def simpan_ke_csv(hasil):
     nama_file = 'siklus_mens.csv'
-    template_csv = '''
-            tgl awal mens                            tgl akhir mens                     tgl awal folik                      tgl akhir folik                       tgl awal ovul                    tgl akhir ovul                     tgl awal lut                        tgl akhir lut
-         {}                     {}                  {}                  {}                  {}              {}                {}              {}'''.format(hasil[0], hasil[1], hasil[2], hasil[3], hasil[4], hasil[5], hasil[6], hasil[7])
-    file_datamens = open(nama_file, 'a')
+    template_csv = '''    tgl awal mens,              tgl akhir mens,             tgl awal folik,             tgl akhir folik,                tgl awal ovul,              tgl akhir ovul,             tgl awal lut,           tgl akhir lut
+      {}                   {}                  {}                  {}                     {}                  {}                 {}              {}'''.format(
+            hasil[0].strftime('%d-%m-%Y'),
+            hasil[1].strftime('%d-%m-%Y'),
+            hasil[2].strftime('%d-%m-%Y'),
+            hasil[3].strftime('%d-%m-%Y'),
+            hasil[4].strftime('%d-%m-%Y'),
+            hasil[5].strftime('%d-%m-%Y'),
+            hasil[6].strftime('%d-%m-%Y'),
+            hasil[7].strftime('%d-%m-%Y')
+        )
+    file_datamens = open(nama_file, 'w')
     file_datamens.write(template_csv)
-    file_datamens.close()
-        
-
-    messagebox.showinfo("Sukses", "Hasil berhasil disimpan dalam file {}".format(nama_file))
+    file_datamens.close() 
 
 simpan_ke_csv(hasil)
