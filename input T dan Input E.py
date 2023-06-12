@@ -2,9 +2,7 @@ from datetime import datetime, timedelta
 import os
 import calendar
 
-def hitung_siklus_mens():
-    rata_waktu_mens = int(input("Masukkan rata-rata durasi menstruasi (dalam hari): "))
-    tgl_terakhir_mens = input("Masukkan tanggal terakhir menstruasi (format: DD-MM-YYYY): ")
+def hitung_siklus_mens(tgl_terakhir_mens, rata_waktu_mens):
     tgl_terakhir_mens = datetime.strptime(tgl_terakhir_mens, '%d-%m-%Y')
 
     tgl_awal_mens_berikutnya = tgl_terakhir_mens + timedelta(days=28)
