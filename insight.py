@@ -1,6 +1,4 @@
 #INSIGHT
-
-import numpy as np
 import webbrowser
 import tkinter as tk
 from PIL import Image, ImageTk
@@ -13,17 +11,14 @@ def link_olahraga():
     webbrowser.open(youtube_link)
 
 def olahraga():
-    window = tk.Tk()
+    window = tk.Toplevel()
     window.resizable(False,False)
     window.configure(bg='lightpink')
     window.geometry('600x600')
 
-    image = Image.open("bg4.jpeg")
-    image = image.resize((window.winfo_screenwidth(), window.winfo_screenheight()))
+    image = Image.open("bg4.jpg")
     image = image.resize((600, 900)) 
-
     photo = ImageTk.PhotoImage(image)
-
     background_label = tk.Label(window, image=photo)
     background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
@@ -47,8 +42,6 @@ def olahraga():
 
     window.mainloop()
 
-olahraga()
-
 # MAKANAN
 
 def link_makanan():
@@ -56,12 +49,12 @@ def link_makanan():
     webbrowser.open(youtube_link)
 
 def makanan():
-    window = tk.Tk()
+    window = tk.Toplevel()
     window.resizable(False,False)
     window.configure(bg='lightpink')
     window.geometry('600x600')
 
-    image = Image.open("bg5.jpeg")
+    image = Image.open("bg5.jpg")
     image = image.resize((window.winfo_screenwidth(), window.winfo_screenheight()))
     image = image.resize((600, 900))  
 
@@ -94,20 +87,18 @@ def makanan():
 
     window.mainloop()
 
-makanan()
-
 #TIDUR
 def link_tidur():
     youtube_link = "https://youtu.be/YedavoJ7zhc"
     webbrowser.open(youtube_link)
 
 def tidur():
-    window = tk.Tk()
+    window = tk.Toplevel()
     window.resizable(False,False)
     window.configure(bg='lightpink')
     window.geometry('600x600')
 
-    image = Image.open("bg6.jpeg")
+    image = Image.open("bg6.jpg")
     image = image.resize((window.winfo_screenwidth(), window.winfo_screenheight()))
     image = image.resize((600, 900))  
 
@@ -139,5 +130,3 @@ def tidur():
     button.pack()
 
     window.mainloop()
-
-tidur()
