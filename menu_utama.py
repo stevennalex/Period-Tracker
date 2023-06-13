@@ -1,8 +1,9 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 import json
 import insight
+from input_T_dan_Input_E import hitung_siklus_mens as hitung
 
 file_path = "login_count.json"
 
@@ -42,21 +43,36 @@ foto = ImageTk.PhotoImage(resize_image)
 label_foto = tk.Label(window_utama, image=foto)
 label_foto.pack()
 
-if login_count==1:
-    input_frame = ttk.Frame(window_utama)
-    input_frame.pack(padx=60, pady=10, fill='x', expand=True)
+nilai_input1 = tk.StringVar()
+nilai_input2 = tk.StringVar()
+nilai_tgl_terakhir = nilai_input1.get()
+nilai_ratarata = nilai_input2.get()
 
-    label_tgl_terakhir_mens = ttk.Label(input_frame, text='Tanggal Terakhir Mens Kamu (DD-MM-YYYY):')
-    label_tgl_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
+def inputinput():
+    if login_count==1:
+        try:
+            input_frame = ttk.Frame(window_utama)
+            input_frame.pack(padx=60, pady=10, fill='x', expand=True)
 
-    entry_tgl_terakhir_mens = ttk.Entry(input_frame, show='*')
-    entry_tgl_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
+            label_tgl_terakhir_mens = ttk.Label(input_frame, text='Tanggal Terakhir Mens Kamu (DD-MM-YYYY):')
+            label_tgl_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
 
-    label_ratarata = ttk.Label(input_frame, text='Rata-Rata Durasi Mens Kamu:')
-    label_ratarata.pack(padx=10, pady=10, fill='x', expand=True)
+            entry_tgl_terakhir_mens = ttk.Entry(input_frame)
+            entry_tgl_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
 
-    entry_ratarata = ttk.Entry(input_frame, show='*')
-    entry_ratarata.pack(padx=10, pady=10, fill='x', expand=True)
+            label_ratarata = ttk.Label(input_frame, text='Rata-Rata Durasi Mens Kamu (Hari):')
+            label_ratarata.pack(padx=10, pady=10, fill='x', expand=True)
+
+            entry_ratarata = ttk.Entry(input_frame)
+            entry_ratarata.pack(padx=10, pady=10, fill='x', expand=True)
+
+            entry_button = ttk.Button(input_frame, text='Tekan Untuk Melanjutkan', command=lambda: hitung(nilai_tgl_terakhir, nilai_ratarata))
+            entry_button.pack(padx=10, pady=10, fill='x', expand=True)
+        except:
+            messagebox.showerror('Error', 'Masukkan Input Ulang Ya')
+            inputinput()
+
+inputinput()
 
 #belum nyambungin ke T
 
@@ -69,7 +85,6 @@ def next_page():
 
     def modulinsight():
         next_window.withdraw()
-        
 
         insight_window = tk.Toplevel()
         insight_window.configure(bg='lightpink')
