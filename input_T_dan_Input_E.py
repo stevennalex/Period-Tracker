@@ -1,10 +1,10 @@
-from datetime import datetime, timedelta
+from datetime import timedelta, datetime
 import os
 import calendar
 
 def hitung_siklus_mens(tgl_terakhir_mens, rata_waktu_mens):
     tgl_terakhir_mens = datetime.strptime(tgl_terakhir_mens, '%d-%m-%Y')
-
+    
     tgl_awal_mens_berikutnya = tgl_terakhir_mens + timedelta(days=28)
     tgl_akhir_mens_berikutnya = tgl_terakhir_mens + timedelta(days=28 + rata_waktu_mens)
 
@@ -27,6 +27,7 @@ def hitung_siklus_mens(tgl_terakhir_mens, rata_waktu_mens):
     durasi_folikular = (tgl_akhir_folikular_berikutnya - tgl_awal_folikular_berikutnya).days
     durasi_ovulasi = (tgl_akhir_ovulasi_berikutnya - tgl_awal_ovulasi_berikutnya).days
     durasi_luteal = (tgl_akhir_luteal_berikutnya - tgl_awal_luteal_berikutnya).days
+
     return (
         tgl_awal_mens_berikutnya.date(),
         tgl_akhir_mens_berikutnya.date(),
@@ -42,6 +43,7 @@ def hitung_siklus_mens(tgl_terakhir_mens, rata_waktu_mens):
         durasi_luteal,
     )
 
+hitung_siklus_mens()
 hasil = hitung_siklus_mens()
 
 def simpan_ke_csv_1(hasil, nama_file):
