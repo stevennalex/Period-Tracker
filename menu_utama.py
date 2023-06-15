@@ -61,8 +61,8 @@ if login_count==1:
 
         label_thn_terakhir_mens = ttk.Label(input_frame2, text='Tahun Terakhir Mens Kamu: (YYYY)')
         label_thn_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
-        entry_bln_terakhir_mens = ttk.Entry(input_frame2)
-        entry_bln_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
+        entry_thn_terakhir_mens = ttk.Entry(input_frame2)
+        entry_thn_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
 
         label_ratarata = ttk.Label(input_frame2, text='Rata-Rata Durasi Mens Kamu (Hari):')
         label_ratarata.pack(padx=10, pady=10, fill='x', expand=True)
