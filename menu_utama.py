@@ -1,3 +1,4 @@
+import csv
 import tkinter as tk
 from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
@@ -42,6 +43,11 @@ foto = ImageTk.PhotoImage(resize_image)
 label_foto = tk.Label(window_utama, image=foto)
 label_foto.pack(pady=20)
 
+hasilA = tk.StringVar()
+hasilB = tk.StringVar()
+hasilC = tk.StringVar()
+hasilD = tk.StringVar()
+
 if login_count==1:
     try:
         input_frame1 = ttk.Frame(window_utama)
@@ -51,34 +57,50 @@ if login_count==1:
 
         label_tgl_terakhir_mens = ttk.Label(input_frame1, text='Tanggal Terakhir Mens Kamu: (DD)')
         label_tgl_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
-        entry_tgl_terakhir_mens = ttk.Entry(input_frame1)
+        entry_tgl_terakhir_mens = ttk.Entry(input_frame1, textvariable=hasilA)
         entry_tgl_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
 
         label_bln_terakhir_mens = ttk.Label(input_frame1, text='Bulan Terakhir Mens Kamu: (MM)')
         label_bln_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
-        entry_bln_terakhir_mens = ttk.Entry(input_frame1)
+        entry_bln_terakhir_mens = ttk.Entry(input_frame1, textvariable=hasilB)
         entry_bln_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
 
         label_thn_terakhir_mens = ttk.Label(input_frame2, text='Tahun Terakhir Mens Kamu: (YYYY)')
         label_thn_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
-        entry_thn_terakhir_mens = ttk.Entry(input_frame2)
+        entry_thn_terakhir_mens = ttk.Entry(input_frame2, textvariable=hasilC)
         entry_thn_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
 
         label_ratarata = ttk.Label(input_frame2, text='Rata-Rata Durasi Mens Kamu (Hari):')
         label_ratarata.pack(padx=10, pady=10, fill='x', expand=True)
-        entry_ratarata = ttk.Entry(input_frame2)
+        entry_ratarata = ttk.Entry(input_frame2, textvariable=hasilD)
         entry_ratarata.pack(padx=10, pady=10, fill='x', expand=True)
 
-        button_next = ttk.Button(window_utama, text='Hitung')
+        def simpan_data():
+            tanggal = hasilA.get()
+            bulan = hasilB.get()
+            tahun = hasilC.get()
+            ratarata = hasilD.get()
+            nama_file = 'data_input.csv'
+            simpan_ke_csv(tanggal, bulan, tahun, ratarata, nama_file)
+
+        button_next = ttk.Button(window_utama, text='Hitung', command=simpan_data)
         button_next.pack(fill='x', pady=20, expand=True)
+        
     except:
         messagebox.showerror('Error', 'Masukkan Input Ulang Ya')
 
-#belum nyambungin ke T
+def simpan_ke_csv(tanggal, bulan, tahun, ratarata, nama_file):
+    header = ['Tanggal', 'Bulan', 'Tahun','rata-rata']
+    data = [[tanggal, bulan, tahun,ratarata]]
+
+    with open(nama_file, 'w', newline='') as file_datamens:
+        writer = csv.writer(file_datamens)
+        writer.writerow(header)
+        writer.writerows(data)
+
 
 def next_page():
     window_utama.withdraw()
-
     def closedwindow1():
         next_window.withdraw()
         window_utama.deiconify()
@@ -150,5 +172,6 @@ def next_page():
     
 button_next = ttk.Button(window_utama, text='Next', command=next_page)
 button_next.pack(fill='x', pady=10, expand=True)
+
 
 window_utama.mainloop()
