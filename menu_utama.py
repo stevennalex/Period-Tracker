@@ -3,7 +3,6 @@ from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 import json
 import insight
-from input_T_dan_Input_E import hitung_siklus_mens as hitung
 
 file_path = "login_count.json"
 
@@ -33,7 +32,7 @@ save_data(data)
 
 window_utama = tk.Tk()
 window_utama.configure(bg='lightpink')
-window_utama.geometry('750x700')
+window_utama.geometry('750x750')
 window_utama.resizable(False, False)
 window_utama.title('Period Tracker')
 
@@ -41,38 +40,39 @@ image = Image.open("foto_tubes.jpg")
 resize_image = image.resize((600,400))
 foto = ImageTk.PhotoImage(resize_image)
 label_foto = tk.Label(window_utama, image=foto)
-label_foto.pack()
+label_foto.pack(pady=20)
 
-nilai_input1 = tk.StringVar()
-nilai_input2 = tk.StringVar()
-nilai_tgl_terakhir = nilai_input1.get()
-nilai_ratarata = nilai_input2.get()
+if login_count==1:
+    try:
+        input_frame1 = ttk.Frame(window_utama)
+        input_frame1.pack(side='left', fill='x', padx=70, expand=True)
+        input_frame2 = ttk.Frame(window_utama)
+        input_frame2.pack(side='right', fill='x', padx=70, expand=True)
 
-def inputinput():
-    if login_count==1:
-        try:
-            input_frame = ttk.Frame(window_utama)
-            input_frame.pack(padx=60, pady=10, fill='x', expand=True)
+        label_tgl_terakhir_mens = ttk.Label(input_frame1, text='Tanggal Terakhir Mens Kamu: (DD)')
+        label_tgl_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
+        entry_tgl_terakhir_mens = ttk.Entry(input_frame1)
+        entry_tgl_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
 
-            label_tgl_terakhir_mens = ttk.Label(input_frame, text='Tanggal Terakhir Mens Kamu (DD-MM-YYYY):')
-            label_tgl_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
+        label_bln_terakhir_mens = ttk.Label(input_frame1, text='Bulan Terakhir Mens Kamu: (MM)')
+        label_bln_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
+        entry_bln_terakhir_mens = ttk.Entry(input_frame1)
+        entry_bln_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
 
-            entry_tgl_terakhir_mens = ttk.Entry(input_frame)
-            entry_tgl_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
+        label_thn_terakhir_mens = ttk.Label(input_frame2, text='Tahun Terakhir Mens Kamu: (YYYY)')
+        label_thn_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
+        entry_bln_terakhir_mens = ttk.Entry(input_frame2)
+        entry_bln_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
 
-            label_ratarata = ttk.Label(input_frame, text='Rata-Rata Durasi Mens Kamu (Hari):')
-            label_ratarata.pack(padx=10, pady=10, fill='x', expand=True)
+        label_ratarata = ttk.Label(input_frame2, text='Rata-Rata Durasi Mens Kamu (Hari):')
+        label_ratarata.pack(padx=10, pady=10, fill='x', expand=True)
+        entry_ratarata = ttk.Entry(input_frame2)
+        entry_ratarata.pack(padx=10, pady=10, fill='x', expand=True)
 
-            entry_ratarata = ttk.Entry(input_frame)
-            entry_ratarata.pack(padx=10, pady=10, fill='x', expand=True)
-
-            entry_button = ttk.Button(input_frame, text='Tekan Untuk Melanjutkan', command=lambda: hitung(nilai_tgl_terakhir, nilai_ratarata))
-            entry_button.pack(padx=10, pady=10, fill='x', expand=True)
-        except:
-            messagebox.showerror('Error', 'Masukkan Input Ulang Ya')
-            inputinput()
-
-inputinput()
+        button_next = ttk.Button(window_utama, text='Hitung')
+        button_next.pack(fill='x', pady=20, expand=True)
+    except:
+        messagebox.showerror('Error', 'Masukkan Input Ulang Ya')
 
 #belum nyambungin ke T
 
@@ -147,7 +147,8 @@ def next_page():
     button_back.pack(padx=60, pady=10, fill='x', expand=True)
 
     next_window.mainloop()
+    
 button_next = ttk.Button(window_utama, text='Next', command=next_page)
-button_next.pack(fill='x', padx=150, expand=True)
+button_next.pack(fill='x', pady=10, expand=True)
 
 window_utama.mainloop()
