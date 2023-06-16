@@ -4,6 +4,7 @@ from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
 import json
 import insight
+import webbrowser
 
 file_path = "login_count.json"
 
@@ -43,55 +44,37 @@ foto = ImageTk.PhotoImage(resize_image)
 label_foto = tk.Label(window_utama, image=foto)
 label_foto.pack(pady=20)
 
-hasilA = tk.StringVar()
-hasilB = tk.StringVar()
-hasilC = tk.StringVar()
-hasilD = tk.StringVar()
+hasil1 = tk.StringVar()
+hasil2 = tk.StringVar()
 
 if login_count==1:
-    try:
-        input_frame1 = ttk.Frame(window_utama)
-        input_frame1.pack(side='left', fill='x', padx=70, expand=True)
-        input_frame2 = ttk.Frame(window_utama)
-        input_frame2.pack(side='right', fill='x', padx=70, expand=True)
+    input_frame1 = ttk.Frame(window_utama)
+    input_frame1.pack(side='left', fill='x', padx=70, expand=True)
+    input_frame2 = ttk.Frame(window_utama)
+    input_frame2.pack(side='right', fill='x', padx=70, expand=True)
 
-        label_tgl_terakhir_mens = ttk.Label(input_frame1, text='Tanggal Terakhir Mens Kamu: (DD)')
-        label_tgl_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
-        entry_tgl_terakhir_mens = ttk.Entry(input_frame1, textvariable=hasilA)
-        entry_tgl_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
+    label_tgl_terakhir_mens = ttk.Label(input_frame1, text='Tanggal Terakhir Mens Kamu: (DD-MM-YYYY)')
+    label_tgl_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
+    entry_tgl_terakhir_mens = ttk.Entry(input_frame1, textvariable=hasil1)
+    entry_tgl_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
 
-        label_bln_terakhir_mens = ttk.Label(input_frame1, text='Bulan Terakhir Mens Kamu: (MM)')
-        label_bln_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
-        entry_bln_terakhir_mens = ttk.Entry(input_frame1, textvariable=hasilB)
-        entry_bln_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
+    label_ratarata = ttk.Label(input_frame2, text='Rata-Rata Durasi Mens Kamu (Hari):')
+    label_ratarata.pack(padx=10, pady=10, fill='x', expand=True)
+    entry_ratarata = ttk.Entry(input_frame2, textvariable=hasil2)
+    entry_ratarata.pack(padx=10, pady=10, fill='x', expand=True)
 
-        label_thn_terakhir_mens = ttk.Label(input_frame2, text='Tahun Terakhir Mens Kamu: (YYYY)')
-        label_thn_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
-        entry_thn_terakhir_mens = ttk.Entry(input_frame2, textvariable=hasilC)
-        entry_thn_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
+    def simpan_data():
+        tanggal = hasil1.get()
+        ratarata = hasil2.get()
+        nama_file = 'data_input.csv'
+        simpan_ke_csv(tanggal, ratarata, nama_file)
 
-        label_ratarata = ttk.Label(input_frame2, text='Rata-Rata Durasi Mens Kamu (Hari):')
-        label_ratarata.pack(padx=10, pady=10, fill='x', expand=True)
-        entry_ratarata = ttk.Entry(input_frame2, textvariable=hasilD)
-        entry_ratarata.pack(padx=10, pady=10, fill='x', expand=True)
+    button_next = ttk.Button(window_utama, text='Hitung', command=simpan_data)
+    button_next.pack(fill='x', pady=20, expand=True)
 
-        def simpan_data():
-            tanggal = hasilA.get()
-            bulan = hasilB.get()
-            tahun = hasilC.get()
-            ratarata = hasilD.get()
-            nama_file = 'data_input.csv'
-            simpan_ke_csv(tanggal, bulan, tahun, ratarata, nama_file)
-
-        button_next = ttk.Button(window_utama, text='Hitung', command=simpan_data)
-        button_next.pack(fill='x', pady=20, expand=True)
-        
-    except:
-        messagebox.showerror('Error', 'Masukkan Input Ulang Ya')
-
-def simpan_ke_csv(tanggal, bulan, tahun, ratarata, nama_file):
-    header = ['Tanggal', 'Bulan', 'Tahun','rata-rata']
-    data = [[tanggal, bulan, tahun,ratarata]]
+def simpan_ke_csv(tanggal,ratarata, nama_file):
+    header = ['Tanggal', 'rata-rata']
+    data = [[tanggal, ratarata]]
 
     with open(nama_file, 'w', newline='') as file_datamens:
         writer = csv.writer(file_datamens)
@@ -108,7 +91,7 @@ def next_page():
     def modulinsight():
         next_window.withdraw()
 
-        insight_window = tk.Toplevel()
+        insight_window = tk.Tk()
         insight_window.configure(bg='lightpink')
         insight_window.geometry('750x700')
         insight_window.resizable(False, False)
@@ -121,17 +104,117 @@ def next_page():
         button_frame = ttk.Frame(insight_window)
         button_frame.pack(padx=60, pady=10, fill='x', expand=True)
         
+
         def modulolahraga():
             insight_window.withdraw()
-            insight.olahraga()
-        
+
+            isi_insight = tk.Toplevel()
+            isi_insight.configure(bg='lightpink')
+            isi_insight.geometry('600x600')
+            isi_insight.resizable(False, False)
+            isi_insight.title('Insight')
+
+            def back():
+                isi_insight.withdraw()
+                insight_window.deiconify()
+                
+            def link_olahraga():
+                youtube_link = "https://www.youtube.com/results?search_query=rekomendasi+olahraga+untuk+menstruasi"
+                webbrowser.open(youtube_link)
+
+            image = Image.open("bg4.jpg")
+            image = image.resize((isi_insight.winfo_screenwidth(), isi_insight.winfo_screenheight()))
+            image = image.resize((600, 900)) 
+
+            photo = ImageTk.PhotoImage(image)
+            background_label = ttk.Label(isi_insight, image=photo)
+            background_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+            hasila = insight.teks_olahraga()
+            text_olahraga = ttk.Label(isi_insight, text=hasila, justify='center', wraplength=450)
+            text_olahraga.pack()
+
+            button_link = ttk.Button(isi_insight, text='Rekomendasi Olahraga', command=link_olahraga)
+            button_link.pack()
+
+            button_olahraga = ttk.Button(isi_insight, text='Back', command=back)
+            button_olahraga.pack()
+
+            isi_insight.mainloop()
+
         def modulmakanan():
             insight_window.withdraw()
-            insight.makanan()
-        
+
+            isi_insight = tk.Toplevel()
+            isi_insight.configure(bg='lightpink')
+            isi_insight.geometry('600x620')
+            isi_insight.resizable(False, False)
+            isi_insight.title('Insight')
+            
+            def back():
+                isi_insight.withdraw()
+                insight_window.deiconify()
+
+            def link_makanan():
+                youtube_link = "https://youtu.be/V42iKfIMSD8"
+                webbrowser.open(youtube_link)
+
+            image = Image.open("bg5.jpg")
+            image = image.resize((isi_insight.winfo_screenwidth(), isi_insight.winfo_screenheight()))
+            image = image.resize((600, 900))  
+
+            photo = ImageTk.PhotoImage(image)
+            background_label = tk.Label(isi_insight, image=photo)
+            background_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+            hasilb = insight.makanan()
+            text_makanan = ttk.Label(isi_insight, text=hasilb, justify='center', wraplength=450)
+            text_makanan.pack()
+
+            button_link = ttk.Button(isi_insight, text='Rekomendasi Makanan', command=link_makanan)
+            button_link.pack()
+
+            button_makanan = ttk.Button(isi_insight, text='Back', command=back)
+            button_makanan.pack()
+
+            isi_insight.mainloop()
+
         def modultidur():
             insight_window.withdraw()
-            insight.tidur()
+
+            isi_insight = tk.Toplevel()
+            isi_insight.configure(bg='lightpink')
+            isi_insight.geometry('600x620')
+            isi_insight.resizable(False, False)
+            isi_insight.title('Insight')
+            
+            def back():
+                isi_insight.withdraw()
+                insight_window.deiconify()
+
+            def link_tidur():
+                youtube_link = "https://youtu.be/YedavoJ7zhc"
+                webbrowser.open(youtube_link)
+
+            image = Image.open("bg6.jpg")
+            image = image.resize((isi_insight.winfo_screenwidth(), isi_insight.winfo_screenheight()))
+            image = image.resize((600, 900))  
+
+            photo = ImageTk.PhotoImage(image)
+            background_label = tk.Label(isi_insight, image=photo)
+            background_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+            hasilc = insight.tidur()
+            text_tidur = ttk.Label(isi_insight, text=hasilc, justify='center', wraplength=450)
+            text_tidur.pack()
+
+            button_link = ttk.Button(isi_insight, text='Rekomendasi Posisi Tidur', command=link_tidur)
+            button_link.pack()
+
+            button_tidur = ttk.Button(isi_insight, text='Back', command=back)
+            button_tidur.pack()
+
+            isi_insight.mainloop()
 
         button_olahraga = ttk.Button(button_frame, text='Olahraga Yang Cocok Saat Mens', command=modulolahraga)
         button_olahraga.pack(padx=60, pady=10, fill='x', expand=True)
@@ -156,9 +239,11 @@ def next_page():
     button_frame = ttk.Frame(next_window)
     button_frame.pack(padx=60, pady=10, fill='x', expand=True)
 
-    button_kalender = ttk.Button(button_frame, text='Kalender')
+    from Kalender import kalender
+    modul_kalender = kalender
+    button_kalender = ttk.Button(button_frame, text='Kalender', command=modul_kalender)
     button_kalender.pack(padx=60, pady=10, fill='x', expand=True)
-
+    
     button_insight = ttk.Button(button_frame, text='Insight', command=modulinsight)
     button_insight.pack(padx=60, pady=10, fill='x', expand=True)
 
