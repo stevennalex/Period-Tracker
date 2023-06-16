@@ -3,12 +3,17 @@ from matplotlib.figure import Figure
 import tkinter as tk
 import pandas as pd
 from tkinter import ttk
+import webbrowser
+
+def link_haid():
+    shopee_link = "https://bit.ly/rekomendasi-obat"
+    webbrowser.open(shopee_link)
 
 def haid():
     window = tk.Tk()
     window.resizable(False, False)
     window.configure(bg='lightpink')
-    window.geometry('750x700')
+    window.geometry('750x760')
     window.title('Haid Kamu Telat :(')
 
     label = ttk.Label(window, text='''   Mens merupakan proses keluarnya darah dari vagina yang disebabkan oleh terlepasnya dinding rahim (endometrium). Sebelum terlepas bersama dengan darah, endometrium ini mengalami penebalan yang mengandung pembuluh darah.
@@ -46,5 +51,7 @@ def haid():
     canvas.draw()
     canvas.get_tk_widget().pack(pady=10)
 
+    button = tk.Button(window, text="Rekomendasi Obat", command=link_haid)
+    button.pack()
+
     window.mainloop()
-haid()
