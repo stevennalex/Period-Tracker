@@ -5,7 +5,7 @@ import pandas as pd
 from tkinter import ttk
 
 def haid():
-    window = tk.Toplevel()
+    window = tk.Tk()
     window.resizable(False, False)
     window.configure(bg='lightpink')
     window.geometry('750x700')
@@ -22,11 +22,11 @@ def haid():
 
     df = pd.read_csv('durasi_siklus.csv')
 
-    bulan = df['     Bulan']
-    durasi_mens = df['      Durasi Mens']
-    durasi_folikular = df['      Durasi Folikular']
-    durasi_ovulasi = df['     Durasi Ovulasi']
-    durasi_luteal = df['   Durasi Luteal']
+    bulan = df['Bulan']
+    durasi_mens = df['Durasi Mens']
+    durasi_folikular = df['Durasi Folikular']
+    durasi_ovulasi = df['Durasi Ovulasi']
+    durasi_luteal = df['Durasi Luteal']
 
     fig = Figure(figsize=(4, 4))
     ax = fig.add_subplot(111)
@@ -47,3 +47,4 @@ def haid():
     canvas.get_tk_widget().pack(pady=10)
 
     window.mainloop()
+haid()
