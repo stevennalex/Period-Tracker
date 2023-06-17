@@ -3,6 +3,8 @@ import os
 import calendar
 import csv
 import pandas as pd
+import tkinter as tk
+from tkinter import messagebox
 
 df = pd.read_csv('data_input.csv')
 
@@ -94,3 +96,11 @@ hasil = hitung_siklus_mens(tanggal, ratarata)
 def mens():
     hitung_siklus_mens(tanggal, ratarata)
 
+perkiraan = hasil[0].day
+sekarang = datetime.now()
+harisekarang = sekarang.day
+selisih = perkiraan-harisekarang
+
+if selisih >=1:
+    from Kalender import konfirmasi
+    konfirmasi()
