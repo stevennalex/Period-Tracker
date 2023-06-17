@@ -181,6 +181,8 @@ def next_page():
 
             isi_insight.mainloop()
 
+       
+
         def modultidur():
             insight_window.withdraw()
 
@@ -197,6 +199,7 @@ def next_page():
             def link_tidur():
                 youtube_link = "https://youtu.be/YedavoJ7zhc"
                 webbrowser.open(youtube_link)
+
 
             image = Image.open("bg6.jpg")
             image = image.resize((isi_insight.winfo_screenwidth(), isi_insight.winfo_screenheight()))
@@ -218,6 +221,10 @@ def next_page():
 
             isi_insight.mainloop()
 
+        def modulhaid():
+            from HAID import haid
+            haid()
+
         button_olahraga = ttk.Button(button_frame, text='Olahraga Yang Cocok Saat Mens', command=modulolahraga)
         button_olahraga.pack(padx=60, pady=10, fill='x', expand=True)
         
@@ -226,6 +233,9 @@ def next_page():
         
         button_tidur = ttk.Button(button_frame, text='Nyeri Mens Mengganggu Tidur? Ini Tipsnya', command=modultidur)
         button_tidur.pack(padx=60, pady=10, fill='x', expand=True)
+
+        button_haid = ttk.Button(button_frame, text='Haid Kamu Telat?', command=modulhaid)
+        button_haid.pack(padx=60, pady=10, fill='x', expand=True)
 
         button_back = ttk.Button(button_frame, text='Back', command= closedwindow2)
         button_back.pack(padx=60, pady=10, fill='x', expand=True)
