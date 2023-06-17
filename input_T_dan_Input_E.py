@@ -50,9 +50,9 @@ def hitung_siklus_mens(tanggal, ratarata):
         durasi_ovulasi,
         durasi_luteal,
         )
-    simpan_ke_csv_1(hasil, 'siklus_mens.csv')
-    simpan_ke_csv_2(hasil, 'durasi_siklus.csv')
 
+    simpan_ke_csv_1(hasil,'siklus_mens.csv')
+    simpan_ke_csv_2(hasil,'durasi_siklus.csv')
     return hasil
 
 
@@ -90,3 +90,7 @@ def simpan_ke_csv_2(hasil, nama_file):
     file_datamens.close()
 
 hasil = hitung_siklus_mens(tanggal, ratarata)
+
+def mens():
+    hitung_siklus_mens(tanggal, ratarata)
+
