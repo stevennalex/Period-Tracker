@@ -129,4 +129,3 @@ def konfirmasi():
         pass
     else:
         HAID.haid()
-konfirmasi()
