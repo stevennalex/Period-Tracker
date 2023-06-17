@@ -93,7 +93,7 @@ def main_program():
                     button_next = ttk.Button(input_frame, text='Hitung', command=lambda: (hitung_mens, cek1, cek2))
                     button_next.pack()
             inputinputan()
-
+        
             def simpan_ke_csv(tanggal,ratarata, nama_file):
                 header = ['Tanggal', 'rata-rata']
                 data = [[tanggal, ratarata]]
@@ -261,6 +261,66 @@ def main_program():
                     button_back.pack(padx=60, pady=10, fill='x', expand=True)
 
                     insight_window.mainloop()
+                
+                def editperiod():
+                    next_window.withdraw()
+
+                    def backedit():
+                        window_editperiod.withdraw()
+                        next_window.deiconify()
+
+                    window_editperiod = tk.Toplevel()
+                    window_editperiod.configure(bg='lightpink')
+                    window_editperiod.geometry('750x700')
+                    window_editperiod.resizable(False, False)
+                    window_editperiod.title('Edit Period')
+
+                    input_frame = ttk.Frame(window_editperiod)
+                    input_frame.pack(fill='x', padx=70, expand=True)
+
+                    label_tgl_terakhir_mens = ttk.Label(input_frame, text='Tanggal Terakhir Mens Kamu: (DD-MM-YYYY)')
+                    label_tgl_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
+                    entry_tgl_terakhir_mens = ttk.Entry(input_frame, textvariable=hasil1)
+                    entry_tgl_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
+
+                    label_ratarata = ttk.Label(input_frame, text='Rata-Rata Durasi Mens Kamu (Hari):')
+                    label_ratarata.pack(padx=10, pady=10, fill='x', expand=True)
+                    entry_ratarata = ttk.Entry(input_frame, textvariable=hasil2)
+                    entry_ratarata.pack(padx=10, pady=10, fill='x', expand=True)
+
+                    tanggal = hasil1.get()
+                    ratarata = hasil2.get()
+                    def simpan_data():
+                        nama_file = 'data_input.csv'
+                        simpan_ke_csv(tanggal, ratarata, nama_file)
+
+                    def cek1():
+                        try:
+                            if tanggal.isalpha():
+                                raise ValueError('Masukkan Sesuai Format!!')
+                        except:
+                            messagebox.showerror('Error')
+                            editperiod()
+
+                    def cek2():
+                        try:
+                            if ratarata == int(ratarata):
+                                raise ValueError('Masukkan Angka Saja!!')
+                        except ValueError:
+                            messagebox.showerror('Error')
+                            editperiod()
+
+                    from input_T_dan_Input_E import mens
+                    def hitung_mens():
+                        simpan_data()
+                        mens()
+                    button_next = ttk.Button(input_frame, text='Hitung', command=lambda: (hitung_mens, cek1, cek2))
+                    button_next.pack()
+
+                    button_backedit = ttk.Button(input_frame, text='Back', command= backedit)
+                    button_backedit.pack()
+
+                    window_editperiod.mainloop()
 
                 next_window = tk.Toplevel()
                 next_window.configure(bg='lightpink')
@@ -279,7 +339,7 @@ def main_program():
                 button_insight = ttk.Button(button_frame, text='Insight', command=modulinsight)
                 button_insight.pack(padx=60, pady=10, fill='x', expand=True)
 
-                button_editperiod = ttk.Button(button_frame, text='Edit Period')
+                button_editperiod = ttk.Button(button_frame, text='Edit Period', command=editperiod)
                 button_editperiod.pack(padx=60, pady=10, fill='x', expand=True)
 
                 button_back = ttk.Button(button_frame, text='Back', command= closedwindow1)
