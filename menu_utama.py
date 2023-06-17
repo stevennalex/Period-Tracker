@@ -48,19 +48,17 @@ hasil1 = tk.StringVar()
 hasil2 = tk.StringVar()
 
 if login_count==1:
-    input_frame1 = ttk.Frame(window_utama)
-    input_frame1.pack(side='left', fill='x', padx=70, expand=True)
-    input_frame2 = ttk.Frame(window_utama)
-    input_frame2.pack(side='right', fill='x', padx=70, expand=True)
+    input_frame = ttk.Frame(window_utama)
+    input_frame.pack(fill='x', padx=70, expand=True)
 
-    label_tgl_terakhir_mens = ttk.Label(input_frame1, text='Tanggal Terakhir Mens Kamu: (DD-MM-YYYY)')
+    label_tgl_terakhir_mens = ttk.Label(input_frame, text='Tanggal Terakhir Mens Kamu: (DD-MM-YYYY)')
     label_tgl_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
-    entry_tgl_terakhir_mens = ttk.Entry(input_frame1, textvariable=hasil1)
+    entry_tgl_terakhir_mens = ttk.Entry(input_frame, textvariable=hasil1)
     entry_tgl_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
 
-    label_ratarata = ttk.Label(input_frame2, text='Rata-Rata Durasi Mens Kamu (Hari):')
+    label_ratarata = ttk.Label(input_frame, text='Rata-Rata Durasi Mens Kamu (Hari):')
     label_ratarata.pack(padx=10, pady=10, fill='x', expand=True)
-    entry_ratarata = ttk.Entry(input_frame2, textvariable=hasil2)
+    entry_ratarata = ttk.Entry(input_frame, textvariable=hasil2)
     entry_ratarata.pack(padx=10, pady=10, fill='x', expand=True)
 
     def simpan_data():
@@ -69,8 +67,12 @@ if login_count==1:
         nama_file = 'data_input.csv'
         simpan_ke_csv(tanggal, ratarata, nama_file)
 
-    button_next = ttk.Button(window_utama, text='Hitung', command=simpan_data)
-    button_next.pack(fill='x', pady=20, expand=True)
+    from input_T_dan_Input_E import mens
+    def hitung_mens():
+        simpan_data()
+        mens()
+    button_next = ttk.Button(input_frame, text='Hitung', command=hitung_mens)
+    button_next.pack()
 
 def simpan_ke_csv(tanggal,ratarata, nama_file):
     header = ['Tanggal', 'rata-rata']
@@ -257,6 +259,5 @@ def next_page():
     
 button_next = ttk.Button(window_utama, text='Next', command=next_page)
 button_next.pack(fill='x', pady=10, expand=True)
-
 
 window_utama.mainloop()
