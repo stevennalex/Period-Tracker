@@ -44,6 +44,7 @@ def haid():
     ax.set_xlabel('Bulan')
     ax.set_ylabel('Durasi (hari)')
     ax.set_title('Durasi Siklus Menstruasi Setiap Bulan')
+    ax.set_xticks(range(len(bulan)))
     ax.set_xticklabels(bulan, rotation='vertical')
     ax.legend()
 
