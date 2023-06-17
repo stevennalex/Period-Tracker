@@ -1,7 +1,7 @@
 import pandas as pd
 import calendar
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from datetime import datetime
 
 
@@ -121,3 +121,12 @@ data_prediksi = pd.read_csv("siklus_mens.csv")
 
 def kalender():
     konversi_ke_kalender(data_prediksi)
+
+def konfirmasi():
+    import HAID
+    result = messagebox.askokcancel('Konfirmasi', 'Apakah Kamu Sudah Mens? Jika Sudah Tekan OK')
+    if result == True:
+        pass
+    else:
+        HAID.haid()
+konfirmasi()
