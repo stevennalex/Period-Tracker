@@ -49,8 +49,9 @@ def main_program():
 
             hasil1 = tk.StringVar()
             hasil2 = tk.StringVar()
+
             def inputinputan():
-                if login_count==1:
+                if login_count == 1:
                     input_frame = ttk.Frame(window_utama)
                     input_frame.pack(fill='x', padx=70, expand=True)
 
@@ -64,37 +65,39 @@ def main_program():
                     entry_ratarata = ttk.Entry(input_frame, textvariable=hasil2)
                     entry_ratarata.pack(padx=10, pady=10, fill='x', expand=True)
 
-                    tanggal = hasil1.get()
-                    ratarata = hasil2.get()
                     def simpan_data():
+                        tanggal = hasil1.get()
+                        ratarata = hasil2.get()
                         nama_file = 'data_input.csv'
                         simpan_ke_csv(tanggal, ratarata, nama_file)
 
                     def cek1():
                         try:
-                            if tanggal.isalpha():
+                            if hasil1.get().isalpha():
                                 raise ValueError('Masukkan Sesuai Format!!')
-                        except:
+                        except ValueError:
                             messagebox.showerror('Error')
                             inputinputan()
 
                     def cek2():
                         try:
-                            if ratarata == int(ratarata):
+                            if int(hasil2.get()) == hasil2.get():
                                 raise ValueError('Masukkan Angka Saja!!')
                         except ValueError:
                             messagebox.showerror('Error')
                             inputinputan()
 
-                    from input_T_dan_Input_E import mens
                     def hitung_mens():
                         simpan_data()
+                        from input_T_dan_Input_E import mens
                         mens()
-                    button_next = ttk.Button(input_frame, text='Hitung', command=lambda: (hitung_mens, cek1, cek2))
+
+                    button_next = ttk.Button(input_frame, text='Hitung', command=lambda: (hitung_mens(), cek1(), cek2()))
                     button_next.pack()
+
             inputinputan()
-        
-            def simpan_ke_csv(tanggal,ratarata, nama_file):
+
+            def simpan_ke_csv(tanggal, ratarata, nama_file):
                 header = ['Tanggal', 'rata-rata']
                 data = [[tanggal, ratarata]]
 
@@ -102,8 +105,7 @@ def main_program():
                     writer = csv.writer(file_datamens)
                     writer.writerow(header)
                     writer.writerows(data)
-
-
+      
             def next_page():
                 window_utama.withdraw()
                 def closedwindow1():
@@ -126,7 +128,6 @@ def main_program():
                     button_frame = ttk.Frame(insight_window)
                     button_frame.pack(padx=60, pady=10, fill='x', expand=True)
                     
-
                     def modulolahraga():
                         insight_window.withdraw()
 
@@ -201,8 +202,6 @@ def main_program():
 
                         isi_insight.mainloop()
 
-                
-
                     def modultidur():
                         insight_window.withdraw()
 
@@ -219,7 +218,6 @@ def main_program():
                         def link_tidur():
                             youtube_link = "https://youtu.be/YedavoJ7zhc"
                             webbrowser.open(youtube_link)
-
 
                         image = Image.open("bg6.jpg")
                         image = image.resize((isi_insight.winfo_screenwidth(), isi_insight.winfo_screenheight()))
@@ -261,7 +259,7 @@ def main_program():
                     button_back.pack(padx=60, pady=10, fill='x', expand=True)
 
                     insight_window.mainloop()
-                
+
                 def editperiod():
                     next_window.withdraw()
 
@@ -296,15 +294,15 @@ def main_program():
 
                     def cek1():
                         try:
-                            if tanggal.isalpha():
+                            if hasil1.get().isalpha():
                                 raise ValueError('Masukkan Sesuai Format!!')
-                        except:
+                        except ValueError:
                             messagebox.showerror('Error')
                             editperiod()
 
                     def cek2():
                         try:
-                            if ratarata == int(ratarata):
+                            if int(hasil2.get()) == hasil2.get():
                                 raise ValueError('Masukkan Angka Saja!!')
                         except ValueError:
                             messagebox.showerror('Error')
@@ -314,10 +312,11 @@ def main_program():
                     def hitung_mens():
                         simpan_data()
                         mens()
-                    button_next = ttk.Button(input_frame, text='Hitung', command=lambda: (hitung_mens, cek1, cek2))
+
+                    button_next = ttk.Button(input_frame, text='Hitung', command=lambda: (hitung_mens(), cek1(), cek2()))
                     button_next.pack()
 
-                    button_backedit = ttk.Button(input_frame, text='Back', command= backedit)
+                    button_backedit = ttk.Button(input_frame, text='Back', command=backedit)
                     button_backedit.pack()
 
                     window_editperiod.mainloop()
