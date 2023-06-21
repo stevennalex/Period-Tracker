@@ -91,7 +91,7 @@ def main_program():
 
                     def hitung_mens():
                         simpan_data()
-                        from input_T_dan_Input_E import mens
+                        from INPUT_dan_EDIT_PERIOD import mens
                         mens()
 
                     button_next = ttk.Button(input_frame, text='Hitung', command=lambda: (hitung_mens(), cek1(), cek2()))
@@ -310,7 +310,7 @@ def main_program():
                             messagebox.showerror('Error')
                             editperiod()
 
-                    from input_T_dan_Input_E import mens
+                    from INPUT_dan_EDIT_PERIOD import mens
                     def hitung_mens():
                         simpan_data()
                         mens()
