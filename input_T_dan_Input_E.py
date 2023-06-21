@@ -1,19 +1,9 @@
 from datetime import timedelta, datetime
 import os
 import calendar
-import csv
 import pandas as pd
-import tkinter as tk
-from tkinter import messagebox
-
-df = pd.read_csv('data_input.csv')
-
-tanggal = df['Tanggal'].astype(str)
-ratarata = int(df['rata-rata'].values[0])
-tanggal = pd.to_datetime(tanggal, format='%d-%m-%Y').iloc[0]
 
 def hitung_siklus_mens(tanggal, ratarata):
-        
 
     tgl_awal_mens_berikutnya = tanggal + timedelta(days=28)
     tgl_akhir_mens_berikutnya = tanggal + timedelta(days=27 + ratarata)
@@ -53,8 +43,6 @@ def hitung_siklus_mens(tanggal, ratarata):
         durasi_luteal,
         )
 
-    simpan_ke_csv_1(hasil,'siklus_mens.csv')
-    simpan_ke_csv_2(hasil,'durasi_siklus.csv')
     return hasil
 
 
@@ -91,11 +79,17 @@ def simpan_ke_csv_2(hasil, nama_file):
     file_datamens.write(template_csv)
     file_datamens.close()
 
-hasil = hitung_siklus_mens(tanggal, ratarata)
 
 def mens():
-    hitung_siklus_mens(tanggal, ratarata)
+    df = pd.read_csv('data_input.csv')
 
+    tanggal = df['Tanggal'].astype(str)
+    ratarata = int(df['rata-rata'].values[0])
+    tanggal = pd.to_datetime(tanggal, format='%d-%m-%Y').iloc[0]
+    hasil = hitung_siklus_mens(tanggal, ratarata)
+    hitung_siklus_mens(tanggal, ratarata)
+    simpan_ke_csv_1(hasil,'siklus_mens.csv')
+    simpan_ke_csv_2(hasil,'durasi_siklus.csv')
 perkiraan = hasil[0].day
 sekarang = datetime.now()
 harisekarang = sekarang.day
