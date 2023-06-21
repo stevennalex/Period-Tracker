@@ -49,6 +49,8 @@ def main_program():
 
             hasil1 = tk.StringVar()
             hasil2 = tk.StringVar()
+            hasil3 = tk.StringVar()
+            hasil4 = tk.StringVar()
 
             def inputinputan():
                 if login_count == 1:
@@ -278,23 +280,23 @@ def main_program():
 
                     label_tgl_terakhir_mens = ttk.Label(input_frame, text='Tanggal Terakhir Mens Kamu: (DD-MM-YYYY)')
                     label_tgl_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
-                    entry_tgl_terakhir_mens = ttk.Entry(input_frame, textvariable=hasil1)
+                    entry_tgl_terakhir_mens = ttk.Entry(input_frame, textvariable=hasil3)
                     entry_tgl_terakhir_mens.pack(padx=10, pady=10, fill='x', expand=True)
 
                     label_ratarata = ttk.Label(input_frame, text='Rata-Rata Durasi Mens Kamu (Hari):')
                     label_ratarata.pack(padx=10, pady=10, fill='x', expand=True)
-                    entry_ratarata = ttk.Entry(input_frame, textvariable=hasil2)
+                    entry_ratarata = ttk.Entry(input_frame, textvariable=hasil4)
                     entry_ratarata.pack(padx=10, pady=10, fill='x', expand=True)
 
-                    tanggal = hasil1.get()
-                    ratarata = hasil2.get()
                     def simpan_data():
+                        tanggal = hasil3.get()
+                        ratarata = hasil4.get()
                         nama_file = 'data_input.csv'
                         simpan_ke_csv(tanggal, ratarata, nama_file)
 
                     def cek1():
                         try:
-                            if hasil1.get().isalpha():
+                            if hasil3.get().isalpha():
                                 raise ValueError('Masukkan Sesuai Format!!')
                         except ValueError:
                             messagebox.showerror('Error')
@@ -302,7 +304,7 @@ def main_program():
 
                     def cek2():
                         try:
-                            if int(hasil2.get()) == hasil2.get():
+                            if int(hasil4.get()) == hasil4.get():
                                 raise ValueError('Masukkan Angka Saja!!')
                         except ValueError:
                             messagebox.showerror('Error')
