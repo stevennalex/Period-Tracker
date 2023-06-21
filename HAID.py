@@ -6,7 +6,7 @@ from tkinter import ttk
 import webbrowser
 
 def link_haid():
-    shopee_link = "https://bit.ly/rekomendasi-obat"
+    shopee_link = "https://shopee.co.id/search?keyword=obat%20haid%20tidak%20teratur&trackingId=searchhint-1687352967-d9a1537c-1034-11ee-8ba6-08f1ea7db67c"
     webbrowser.open(shopee_link)
 
 def haid():
